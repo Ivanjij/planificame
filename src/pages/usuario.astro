@@ -1,0 +1,16 @@
+---
+import Layout from "../layouts/Layout.astro";
+import UsuarioInfo from "../components/Usuario.svelte";
+---
+
+<Layout title="PLANIFICAME - Usuario">
+  <div class="usuario-container">
+    <UsuarioInfo client:load />
+  </div>
+</Layout>
+
+<style>
+  .usuario-container {
+    margin-top: 1rem; /* Equivalente a mt-4 */
+  }
+</style>

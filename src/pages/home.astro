@@ -1,0 +1,16 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Dalle from "../components/Dalle.svelte";
+---
+
+<Layout title="PLANIFICAME - Inicio">
+  <div class="dalle-container">
+    <Dalle client:load />
+  </div>
+</Layout>
+
+<style>
+  .dalle-container {
+    margin-top: 1rem; /* Equivalente a mt-4 */
+  }
+</style>

@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="icon" type="png" href="/favicon.jpeg" />
+
+    <title>Bienvenido a PLANIFICAME</title>
+    <style>
+        /* Variables CSS */
+:root {
+    --primary-color: #00bcd4; /* Púrpura profundo */
+    --secondary-color: #8a2be2; /* Azul violeta */
+    --text-color: #333; /* Default text color for light backgrounds */
+    --light-text-color: #f8f8f8; /* Text color for dark backgrounds (white/off-white) */
+    --background-light: #f4f7f6;
+    --background-dark: #2c3e50;
+    --accent-color: #00bcd4; /* Cian vibrante */
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --error-color: #e74c3c;
+    --form-element-color: #00bcd4; /* Accent color for form elements */
+}
+
+/* Reset básico y box-sizing */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos globales del body (los que me proporcionaste primero) */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #2a2a2a, #1a1a1a); /* Darker, professional gradient */
+    color: var(--light-text-color); /* Global text color for dark body background */
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center; /* Centra horizontalmente el contenido principal */
+    align-items: center; /* Centra verticalmente el contenido principal */
+    flex-direction: column;
+    overflow-x: hidden; /* Evita el scroll horizontal */
+}
+
+/* Animaciones para la tarjeta de bienvenida */
+@keyframes fadeInTitle {
+    0% { opacity: 0; transform: translateY(-30px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInText {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInCard {
+    0% { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* Nuevos estilos para el contenedor de bienvenida y tarjeta */
+.welcome-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1; /* Permite que el contenedor de bienvenida ocupe el espacio disponible */
+    width: 100%;
+    padding: 20px;
+}
+
+.welcome-card {
+    background: #333333;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    border: 1px solid rgba(0, 188, 212, 0.4);
+    animation: fadeInCard 1s ease-out forwards;
+    animation-delay: 0.5s; /* Retrasa la animación de la tarjeta */
+    opacity: 0; /* Asegura que la tarjeta esté oculta al inicio */
+    color: var(--light-text-color); /* Text color for welcome card */
+}
+
+.welcome-button {
+    display: inline-block;
+    padding: 15px 35px;
+    background: var(--accent-color);
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    letter-spacing: 0.8px;
+    box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+    animation: slideInText 2s ease-out forwards;
+    animation-delay: 0.6s;
+}
+
+.welcome-button:hover {
+    background-color: white; /* Button color on hover */
+    color: black; /* Text color on hover */
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 188, 212, 0.5);
+}
+
+.welcome-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 8px rgba(0, 188, 212, 0.3);
+}
+
+/* Estilos existentes (manteniendo la compatibilidad) */
+header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--light-text-color);
+    padding: 1.5rem 0;
+    text-align: center;
+    box-shadow: 0 4px 15px var(--shadow-light);
+    width: 100%; /* Asegura que ocupe todo el ancho */
+}
+
+header h1 {
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    animation: fadeInTitle 1s ease-out forwards; /* Aplicar animación al título del header */
+}
+
+header p {
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+.hero-section {
+    background: url('/public/favicon.jpeg') no-repeat center center/cover;
+    color: var(--light-text-color);
+    text-align: center;
+    padding: 8rem 2rem;
+    position: relative;
+    animation: fadeIn 1.5s ease-out;
+    width: 100%; /* Asegura que ocupe todo el ancho */
+    flex-grow: 1; /* Permite que ocupe espacio si hay un welcome-container */
+    display: flex; /* Añadido para centrar su contenido si es necesario */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4); /* Capa oscura para mejorar legibilidad del texto */
+    z-index: 0; /* Asegura que esté detrás del contenido */
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-content h2 {
+    font-size: 3.8rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    color: var(--light-text-color); /* Hero section heading text color */
+}
+
+.hero-content p {
+    font-size: 1.4rem;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    color: var(--light-text-color); /* Hero section paragraph text color */
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: var(--light-text-color);
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 189, 212, 0.4);
+    cursor: pointer;
+}
+
+.cta-button:hover {
+    background-color: white; /* Button color on hover */
+    color: black; /* Text color on hover */
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 189, 212, 0.6);
+}
+
+main {
+    flex-grow: 1;
+    padding: 3rem 0;
+    width: 100%; /* Asegura que el main ocupe todo el ancho */
+}
+
+/* Ajuste para el .container en el body con display:flex */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    /* Si quieres que el container en el main se centre como bloque */
+    display: block;
+    text-align: center; /* Centra el texto dentro del container */
+}
+
+.features-section, .about-section, .contact-section {
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.features-section {
+    background-color: #333; /* Ajustado para el fondo oscuro del body */
+    color: var(--light-text-color); /* Text color for dark sections */
+}
+
+.features-section h3, .contact-section h3 { /* MODIFICADO: Estos títulos ahora son blancos */
+    font-size: 2.8rem;
+    margin-bottom: 3rem;
+    color: var(--light-text-color); /* Títulos de Features y Contacto ahora en blanco */
+    position: relative;
+    display: inline-block;
+}
+
+.about-section h3 { /* EXCEPCIÓN: Este título permanece en accent-color */
+    font-size: 2.8rem;
+    margin-bottom: 3rem;
+    color: var(--light-text-color); /* Título de Sobre Nosotros permanece en azul */
+    position: relative;
+    display: inline-block;
+}
+
+
+.features-section h3::after, .about-section h3::after, .contact-section h3::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: var(--accent-color);
+    border-radius: 2px;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+}
+
+.feature-item {
+    background-color: #444; /* Darker background for items */
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); /* More pronounced shadow */
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    color: var(--light-text-color); /* Text color for items */
+}
+
+.feature-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(90deg, var(--accent-color), var(--primary-color)); /* Invert for contrast */
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+}
+
+.feature-item:hover::before {
+    opacity: 1;
+}
+
+.feature-item img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.feature-item h4 {
+    font-size: 1.7rem;
+    margin-bottom: 1rem;
+    color: var(--light-text-color); /* MODIFICADO: Título de item ahora en blanco */
+}
+
+.feature-item p {
+    font-size: 1.05rem;
+    color: #ccc; /* Lighter text for dark item background */
+}
+
+.about-section {
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+    color: var(--light-text-color);
+}
+
+.about-section p {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto 3rem auto;
+    line-height: 1.8;
+    font-weight: 300;
+}
+
+.about-section .cta-button {
+    background-color: var(--accent-color);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.4);
+}
+.about-section .cta-button:hover {
+    background-color: white; /* Button color on hover */
+    color: black; /* Text color on hover */
+    box-shadow: 0 8px 20px rgba(0, 189, 212, 0.6);
+}
+
+.contact-section {
+    background-color: #333; /* Ajustado para el fondo oscuro del body */
+    color: var(--light-text-color); /* Text color for dark sections */
+}
+
+.social-links {
+    margin-top: 2rem;
+}
+
+.social-links a {
+    display: inline-block;
+    margin: 0 1rem;
+    font-size: 2.5rem;
+    color: var(--light-text-color); /* MODIFICADO: Iconos de redes sociales ahora en blanco */
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-links a:hover {
+    transform: translateY(-5px) scale(1.1);
+    color: var(--primary-color); /* A contrasting color on hover (purple) */
+}
+
+footer {
+    background-color: var(--background-dark);
+    color: var(--light-text-color);
+    text-align: center;
+    padding: 2rem 0;
+    font-size: 0.9rem;
+    margin-top: auto;
+    width: 100%; /* Asegura que ocupe todo el ancho */
+}
+
+/* Animaciones generales */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Estilos para los formularios modales (Login y Registro) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.3s, opacity 0.3s;
+}
+
+.modal-overlay.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.form-container { /* General class for both forms */
+    background-color: white; /* White background for the form */
+    padding: 3rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 450px;
+    text-align: center;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s ease-out;
+    color: var(--text-color); /* Ensures text is legible in the modal (darker text) */
+}
+
+.modal-overlay.active .form-container {
+    transform: scale(1);
+}
+
+.form-container h2 {
+    font-size: 2rem;
+    color: var(--light-text-color); /* MODIFICADO: Título del formulario ahora en blanco */
+    margin-bottom: 2rem;
+}
+
+.form-container .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    color: #aaa;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.form-container .close-btn:hover {
+    color: var(--light-text-color); /* MODIFICADO: Botón de cerrar en hover ahora en blanco */
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--text-color);
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--form-element-color); /* Blue border on focus */
+    box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.2); /* Blue shadow on focus */
+}
+
+.error-message {
+    color: var(--error-color);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    text-align: left;
+    display: none; /* Hidden by default */
+}
+
+.form-group.error input {
+    border-color: var(--error-color);
+}
+
+.form-group.error .error-message {
+    display: block;
+}
+
+.form-submit-button {
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--form-element-color); /* Blue for submit button */
+    color: var(--light-text-color);
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.form-submit-button:hover {
+    background-color: white; /* White on hover */
+    color: black; /* Black text on hover */
+    transform: translateY(-2px);
+}
+
+/* General error messages */
+.general-error-message {
+    color: var(--error-color);
+    margin-top: 1rem;
+    font-size: 1rem;
+    display: none;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.8rem;
+    }
+    header p {
+        font-size: 1rem;
+    }
+    .hero-content h2 {
+        font-size: 2.5rem;
+    }
+    .hero-content p {
+        font-size: 1.1rem;
+    }
+    .hero-section {
+        padding: 6rem 1rem;
+    }
+    .features-section h3, .about-section h3, .contact-section h3 {
+        font-size: 2.2rem;
+    }
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+    .container {
+        padding: 0 1rem;
+    }
+    .form-container { /* Using the general class */
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 2.2em !important;
+    }
+    .welcome-card h2 { /* Applies if using welcome-card */
+        font-size: 1.8em !important;
+    }
+    .welcome-card p { /* Applies if using welcome-card */
+        font-size: 1em !important;
+    }
+    .hero-content h2 {
+        font-size: 2rem;
+    }
+    .hero-content p {
+        font-size: 1rem;
+    }
+    .cta-button {
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+    }
+    .feature-item {
+        padding: 2rem 1.5rem;
+    }
+    .form-container { /* Using the general class */
+        padding: 1.5rem;
+    }
+    .form-container h2 {
+        font-size: 1.8rem;
+    }
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Bienvenido a PLANIFICAME</h1>
+        <p>La plataforma inteligente para mejorar como profesional.</p>
+    </header>
+
+    <div class="hero-section">
+        <div class="hero-content">
+            <h2 class="fade-in-section">Mejora, progresa, avanza</h2>
+            <p class="fade-in-section">Con **PLANIFICAME**, se un mejor profesional, adaptate a lo nuevo, mejora en lo que ya eres bueno y se bueno en lo que eres malo.</p>
+        </div>
+    </div>
+
+    <main>
+        <section id="features" class="features-section fade-in-section">
+            <div class="container">
+                <h3>¿Qué puedes lograr con PLANIFICAME?</h3>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <h4 class="bi bi-emoji-laughing"> &nbsp; Habilidades blandas</h4>
+                        <p>Encuentra páginas, consejos, herramientas que te ayuden a la mejora de tus habilidades blandas.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4 class="bi bi-graph-up-arrow">&nbsp; Productividad Mejorada</h4>
+                        <p>Mejora tu conocimiento profesional, ponte al día con la tecnología con ayuda de nuestro chatbot.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4 class="bi bi-people">&nbsp; Habilidades sociales</h4>
+                        <p>Identifica tus puntos de mejora sociales, mejora la comunicación, exprersión y confianza.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about-section fade-in-section">
+            <div class="container">
+                <h3>Sobre Nosotros</h3>
+                <p>En **PLANIFICAME**, buscamos la manera de que progreses, sabemos que la tecnología avanza y queremos que avances a su ritmo, por eso desarrollamos una herramienta la cual te ayude en tu desarrollo profesional, la mejora de tus habilidades blandas, cursos profesionales y habilidades sociales.</p>
+                <a href="/about" class="cta-button">Conoce Más de Nuestra Historia</a>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section fade-in-section">
+            <div class="container">
+                <h3>¿Listo para Empezar?</h3>
+                <p>¡Únete a PLANIFICAME hoy mismo y comienza la mejora de tus habilidades!</p>
+                <button id="login-trigger-button" class="cta-button">¡Inicia Sesión!</button>
+                <p style="margin-top: 2rem; font-size: 1.1rem;">¿Aún no tienes cuenta? <a id="register-link" style="color: var(--secondary-color); text-decoration: none; font-weight: 600; cursor: pointer;">Regístrate aquí</a></p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 PLANIFICAME. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <div id="login-overlay" class="modal-overlay">
+        <div class="form-container">
+            <span class="close-btn" id="close-login-btn">&times;</span>
+            <h2>Iniciar Sesión</h2>
+            <form id="login-form">
+                <div class="form-group" id="login-email-group">
+                    <label for="login-email">Correo Electrónico</label>
+                    <input type="email" id="login-email" name="email" required>
+                    <p class="error-message" id="login-email-error">El correo electrónico es requerido.</p>
+                </div>
+                <div class="form-group" id="login-password-group">
+                    <label for="login-password">Contraseña</label>
+                    <input type="password" id="login-password" name="password" required>
+                    <p class="error-message" id="login-password-error">La contraseña es requerida.</p>
+                </div>
+                <p id="login-general-error" class="general-error-message">Credenciales incorrectas. Inténtalo de nuevo.</p>
+                <button type="submit" class="form-submit-button">Acceder</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="register-overlay" class="modal-overlay">
+        <div class="form-container">
+            <span class="close-btn" id="close-register-btn">&times;</span>
+            <h2>Crear Cuenta</h2>
+            <form id="register-form">
+                <div class="form-group" id="register-name-group">
+                    <label for="register-name">Nombre Completo</label>
+                    <input type="text" id="register-name" name="name" required>
+                    <p class="error-message" id="register-name-error">El nombre es requerido.</p>
+                </div>
+                <div class="form-group" id="register-email-group">
+                    <label for="register-email">Correo Electrónico</label>
+                    <input type="email" id="register-email" name="email" required>
+                    <p class="error-message" id="register-email-error">El correo electrónico es requerido.</p>
+                </div>
+                <div class="form-group" id="register-password-group">
+                    <label for="register-password">Contraseña</label>
+                    <input type="password" id="register-password" name="password" required>
+                    <p class="error-message" id="register-password-error">La contraseña debe tener al menos 6 caracteres.</p>
+                </div>
+                <div class="form-group" id="register-confirm-password-group">
+                    <label for="register-confirm-password">Confirmar Contraseña</label>
+                    <input type="password" id="register-confirm-password" name="confirm_password" required>
+                    <p class="error-message" id="register-confirm-password-error">Las contraseñas no coinciden.</p>
+                </div>
+                <p id="register-general-error" class="general-error-message">Hubo un error al intentar registrarte. Inténtalo de nuevo.</p>
+                <button type="submit" class="form-submit-button">Registrarse</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Animaciones al hacer scroll ---
+            const sections = document.querySelectorAll('.fade-in-section');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15 
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // --- Lógica de los formularios de Login y Registro ---
+
+            // Elementos del formulario de Login
+            const loginTriggerButton = document.getElementById('login-trigger-button');
+            const loginOverlay = document.getElementById('login-overlay');
+            const closeLoginBtn = document.getElementById('close-login-btn');
+            const loginForm = document.getElementById('login-form');
+            const loginEmailInput = document.getElementById('login-email'); 
+            const loginPasswordInput = document.getElementById('login-password'); 
+            const loginEmailError = document.getElementById('login-email-error');
+            const loginPasswordError = document.getElementById('login-password-error');
+            const loginGeneralError = document.getElementById('login-general-error');
+            const loginEmailGroup = document.getElementById('login-email-group');
+            const loginPasswordGroup = document.getElementById('login-password-group');
+
+            // Elementos del formulario de Registro
+            const registerLink = document.getElementById('register-link');
+            const registerOverlay = document.getElementById('register-overlay');
+            const closeRegisterBtn = document.getElementById('close-register-btn');
+            const registerForm = document.getElementById('register-form');
+            const registerNameInput = document.getElementById('register-name');
+            const registerEmailInput = document.getElementById('register-email');
+            const registerPasswordInput = document.getElementById('register-password');
+            const registerConfirmPasswordInput = document.getElementById('register-confirm-password');
+            const registerNameError = document.getElementById('register-name-error');
+            const registerEmailError = document.getElementById('register-email-error');
+            const registerPasswordError = document.getElementById('register-password-error');
+            const registerConfirmPasswordError = document.getElementById('register-confirm-password-error');
+            const registerGeneralError = document.getElementById('register-general-error');
+            const registerNameGroup = document.getElementById('register-name-group');
+            const registerEmailGroup = document.getElementById('register-email-group');
+            const registerPasswordGroup = document.getElementById('register-password-group');
+            const registerConfirmPasswordGroup = document.getElementById('register-confirm-password-group');
+
+            // Credenciales "hardcodeadas" para el ejemplo de Login
+            const VALID_EMAIL = 'ficafs@gmail.com';
+            const VALID_PASSWORD = 'password123';
+            const DASHBOARD_URL = '/home'; // La página a la que redirigiremos
+
+            // Función para abrir un modal
+            function openModal(overlay) { // Removido : HTMLElement | null de los parámetros de TS
+                if (overlay) {
+                    overlay.classList.add('active');
+                    // Limpiar campos y errores al abrir
+                    const inputs = overlay.querySelectorAll('input');
+                    inputs.forEach(input => input.value = '');
+                    const errorMessages = overlay.querySelectorAll('.error-message, .general-error-message');
+                    errorMessages.forEach(error => error.style.display = 'none');
+                    const formGroups = overlay.querySelectorAll('.form-group');
+                    formGroups.forEach(group => group.classList.remove('error'));
+                }
+            }
+
+            // Función para cerrar un modal
+            function closeModal(overlay) { // Removido : HTMLElement | null de los parámetros de TS
+                if (overlay) {
+                    overlay.classList.remove('active');
+                }
+            }
+
+            // Event Listeners para el Login
+            if (loginTriggerButton) {
+                loginTriggerButton.addEventListener('click', () => openModal(loginOverlay));
+            }
+            if (closeLoginBtn) {
+                closeLoginBtn.addEventListener('click', () => closeModal(loginOverlay));
+            }
+            if (loginOverlay) {
+                loginOverlay.addEventListener('click', (event) => {
+                    if (event.target === loginOverlay) {
+                        closeModal(loginOverlay);
+                    }
+                });
+            }
+
+            // Event Listeners para el Registro
+            if (registerLink) {
+                registerLink.addEventListener('click', (event) => {
+                    event.preventDefault(); // Evitar que el enlace navegue
+                    closeModal(loginOverlay); // Cerrar login si está abierto
+                    openModal(registerOverlay); // Abrir registro
+                });
+            }
+            if (closeRegisterBtn) {
+                closeRegisterBtn.addEventListener('click', () => closeModal(registerOverlay));
+            }
+            if (registerOverlay) {
+                registerOverlay.addEventListener('click', (event) => {
+                    if (event.target === registerOverlay) {
+                        closeModal(registerOverlay);
+                    }
+                });
+            }
+
+            // Función de validación de formato de email simple
+            function isValidEmail(email) { // Removido : string y : boolean de los parámetros de TS
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+
+            // Función para mostrar error en un campo
+            function showFieldError(groupElement, errorElement, message) { // Removido : HTMLElement | null y : string de los parámetros de TS
+                if (groupElement) groupElement.classList.add('error');
+                if (errorElement) {
+                    errorElement.textContent = message;
+                    errorElement.style.display = 'block';
+                }
+            }
+
+            // Función para ocultar error en un campo
+            function hideFieldError(groupElement, errorElement) { // Removido : HTMLElement | null de los parámetros de TS
+                if (groupElement) groupElement.classList.remove('error');
+                if (errorElement) errorElement.style.display = 'none';
+            }
+
+            // --- Lógica de Envío y Validación del Formulario de Login ---
+            if (loginForm) {
+                loginForm.addEventListener('submit', (event) => {
+                    event.preventDefault();
+
+                    let isValid = true;
+                    if (loginGeneralError) loginGeneralError.style.display = 'none';
+
+                    // Resetear estados de error individuales
+                    hideFieldError(loginEmailGroup, loginEmailError);
+                    hideFieldError(loginPasswordGroup, loginPasswordError);
+
+                    const emailValue = (loginEmailInput instanceof HTMLInputElement) ? loginEmailInput.value.trim() : '';
+                    const passwordValue = (loginPasswordInput instanceof HTMLInputElement) ? loginPasswordInput.value.trim() : '';
+
+                    // Validar email
+                    if (emailValue === '') {
+                        showFieldError(loginEmailGroup, loginEmailError, 'El correo electrónico es requerido.');
+                        isValid = false;
+                    } else if (!isValidEmail(emailValue)) {
+                        showFieldError(loginEmailGroup, loginEmailError, 'Formato de correo electrónico inválido.');
+                        isValid = false;
+                    }
+
+                    // Validar password
+                    if (passwordValue === '') {
+                        showFieldError(loginPasswordGroup, loginPasswordError, 'La contraseña es requerida.');
+                        isValid = false;
+                    }
+
+                    if (isValid) {
+                        // Simular llamada API
+                        if (emailValue === VALID_EMAIL && passwordValue === VALID_PASSWORD) {
+                            console.log('Inicio de sesión exitoso. Redirigiendo...');
+                            // Simular un pequeño retraso antes de redirigir
+                            setTimeout(() => {
+                                window.location.href = DASHBOARD_URL;
+                            }, 500); 
+                        } else {
+                            if (loginGeneralError) {
+                                loginGeneralError.textContent = 'Credenciales incorrectas. Inténtalo de nuevo.';
+                                loginGeneralError.style.display = 'block';
+                            }
+                        }
+                    }
+                });
+            }
+
+            // --- Lógica de Envío y Validación del Formulario de Registro ---
+            if (registerForm) {
+                registerForm.addEventListener('submit', (event) => {
+                    event.preventDefault();
+
+                    let isValid = true;
+                    if (registerGeneralError) registerGeneralError.style.display = 'none';
+
+                    // Resetear estados de error individuales
+                    hideFieldError(registerNameGroup, registerNameError);
+                    hideFieldError(registerEmailGroup, registerEmailError);
+                    hideFieldError(registerPasswordGroup, registerPasswordError);
+                    hideFieldError(registerConfirmPasswordGroup, registerConfirmPasswordError);
+
+                    const nameValue = (registerNameInput instanceof HTMLInputElement) ? registerNameInput.value.trim() : '';
+                    const emailValue = (registerEmailInput instanceof HTMLInputElement) ? registerEmailInput.value.trim() : '';
+                    const passwordValue = (registerPasswordInput instanceof HTMLInputElement) ? registerPasswordInput.value.trim() : '';
+                    const confirmPasswordValue = (registerConfirmPasswordInput instanceof HTMLInputElement) ? registerConfirmPasswordInput.value.trim() : '';
+
+                    // Validar nombre
+                    if (nameValue === '') {
+                        showFieldError(registerNameGroup, registerNameError, 'El nombre es requerido.');
+                        isValid = false;
+                    }
+
+                    // Validar email
+                    if (emailValue === '') {
+                        showFieldError(registerEmailGroup, registerEmailError, 'El correo electrónico es requerido.');
+                        isValid = false;
+                    } else if (!isValidEmail(emailValue)) {
+                        showFieldError(registerEmailGroup, registerEmailError, 'Formato de correo electrónico inválido.');
+                        isValid = false;
+                    }
+
+                    // Validar contraseña
+                    if (passwordValue === '') {
+                        showFieldError(registerPasswordGroup, registerPasswordError, 'La contraseña es requerida.');
+                        isValid = false;
+                    } else if (passwordValue.length < 6) {
+                        showFieldError(registerPasswordGroup, registerPasswordError, 'La contraseña debe tener al menos 6 caracteres.');
+                        isValid = false;
+                    }
+
+                    // Validar confirmación de contraseña
+                    if (confirmPasswordValue === '') {
+                        showFieldError(registerConfirmPasswordGroup, registerConfirmPasswordError, 'Confirma tu contraseña.');
+                        isValid = false;
+                    } else if (passwordValue !== confirmPasswordValue) {
+                        showFieldError(registerConfirmPasswordGroup, registerConfirmPasswordError, 'Las contraseñas no coinciden.');
+                        isValid = false;
+                    }
+
+                    if (isValid) {
+                        // Aquí enviarías los datos del formulario a tu servidor (ej. usando fetch)
+                        console.log('Formulario de registro válido. Datos:', { nameValue, emailValue, passwordValue });
+                        // Simular registro exitoso
+                        alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
+                        closeModal(registerOverlay);
+                        openModal(loginOverlay); // Abrir el modal de login automáticamente
+                    } else {
+                        if (registerGeneralError) {
+                            registerGeneralError.textContent = 'Por favor, corrige los errores en el formulario.';
+                            registerGeneralError.style.display = 'block';
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
